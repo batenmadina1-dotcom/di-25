@@ -1,0 +1,2020 @@
+﻿
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Management System</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fc;
+            color: #1f2937;
+        }
+
+        /* LOGIN БЕТІ */
+
+        #loginPage {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #172554, #3457d5);
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            padding: 40px 35px;
+            border-radius: 18px;
+            box-shadow: 0 15px 45px #00000030;
+        }
+
+        .login-logo {
+            text-align: center;
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .login-box h1 {
+            text-align: center;
+            color: #172554;
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+        .login-subtitle {
+            text-align: center;
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .login-group {
+            margin-bottom: 20px;
+        }
+
+            .login-group label {
+                display: block;
+                font-weight: bold;
+                font-size: 14px;
+                margin-bottom: 9px;
+            }
+
+            .login-group input {
+                width: 100%;
+                padding: 13px;
+                border: 1px solid #d9e0ec;
+                border-radius: 8px;
+                font-size: 15px;
+                outline: none;
+            }
+
+                .login-group input:focus {
+                    border-color: #3457d5;
+                }
+
+        .login-button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #3457d5;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+            .login-button:hover {
+                background: #2745b8;
+            }
+
+        #loginError {
+            color: #dc2626;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 25px;
+            color: #9ca3af;
+            font-size: 12px;
+        }
+
+        /* НЕГІЗГІ САЙТ */
+
+        #mainSite {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .app {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #172554;
+            color: white;
+            padding: 25px 15px;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            padding: 15px 5px 30px;
+            line-height: 1.5;
+        }
+
+        .nav-btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            margin: 7px 0;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            color: white;
+            text-align: left;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+            .nav-btn:hover,
+            .nav-btn.active {
+                background: #3457d5;
+            }
+
+        .sidebar-footer {
+            margin-top: 35px;
+            color: #cbd5e1;
+            font-size: 12px;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        .main {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .topbar {
+            background: white;
+            padding: 23px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 2px 8px #00000008;
+        }
+
+            .topbar h2 {
+                font-size: 21px;
+            }
+
+        .admin {
+            color: #3457d5;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .logout-btn {
+            background: #fee2e2;
+            color: #b91c1c;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 13px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .welcome {
+            margin-bottom: 25px;
+        }
+
+            .welcome h1 {
+                margin-bottom: 10px;
+                font-size: 28px;
+            }
+
+            .welcome p {
+                color: #6b7280;
+            }
+
+        button {
+            cursor: pointer;
+        }
+
+        .btn {
+            padding: 11px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background: #3457d5;
+            color: white;
+        }
+
+            .btn-primary:hover {
+                background: #2745b8;
+            }
+
+        .btn-danger {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .btn-light {
+            background: #eef2ff;
+            color: #3457d5;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            border-radius: 14px;
+            box-shadow: 0 3px 12px #00000008;
+        }
+
+            .card p {
+                color: #6b7280;
+                font-size: 14px;
+            }
+
+            .card h2 {
+                font-size: 32px;
+                margin: 15px 0 8px;
+                color: #172554;
+            }
+
+        .panel {
+            background: white;
+            padding: 22px;
+            border-radius: 14px;
+            margin-bottom: 22px;
+            box-shadow: 0 3px 12px #00000008;
+        }
+
+            .panel h3 {
+                margin-bottom: 18px;
+            }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f8fafc;
+            color: #6b7280;
+            text-align: left;
+            font-size: 12px;
+        }
+
+        th, td {
+            padding: 14px 12px;
+            border-bottom: 1px solid #e5eaf2;
+            white-space: nowrap;
+        }
+
+        td {
+            font-size: 13px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+            .form-group label {
+                font-size: 14px;
+                font-weight: bold;
+            }
+
+            .form-group input,
+            .form-group select,
+            .search {
+                width: 100%;
+                padding: 12px;
+                border: 1px solid #d9e0ec;
+                border-radius: 8px;
+                font-size: 14px;
+                outline: none;
+            }
+
+                .form-group input:focus,
+                .form-group select:focus,
+                .search:focus {
+                    border-color: #3457d5;
+                }
+
+        .form-actions {
+            margin-top: 22px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 10px;
+            background: #dcfce7;
+            color: #166534;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .search {
+            margin-bottom: 18px;
+        }
+
+        .empty {
+            padding: 25px;
+            text-align: center;
+            color: #6b7280;
+        }
+
+        .profile {
+            max-width: 600px;
+        }
+
+            .profile p {
+                margin: 15px 0;
+            }
+
+        @media (max-width: 1000px) {
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .sidebar {
+                width: 210px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .app {
+                display: block;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .cards {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .card {
+                padding: 15px;
+            }
+
+                .card h2 {
+                    font-size: 25px;
+                }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            .topbar {
+                padding: 18px;
+                flex-wrap: wrap;
+            }
+
+            .welcome h1 {
+                font-size: 23px;
+            }
+
+            .login-box {
+                padding: 30px 22px;
+            }
+        }
+        /* Қазақы ою-өрнегі бар фон */
+        body {
+            body {
+                margin: 0;
+                min-height: 100vh;
+                background-image: url("./kazakh-ornament.jpg");
+                background-size: cover;
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 1-БЕТ: LOGIN -->
+
+    <section id="loginPage">
+
+        <div class="login-box">
+
+            <div class="login-logo">🎓</div>
+
+            <h1>Student Management</h1>
+
+            <p class="login-subtitle">
+                Мадинаның аккаунты арқылы жүйеге кіріңіз
+            </p>
+
+            <form id="loginForm">
+
+                <div class="login-group">
+                    <label for="username">Логин</label>
+
+                    <input type="text"
+                           id="username"
+                           placeholder="Логинді енгізіңіз"
+                           autocomplete="username"
+                           required>
+                </div>
+
+                <div class="login-group">
+                    <label for="password">Пароль</label>
+
+                    <input type="password"
+                           id="password"
+                           placeholder="Парольді енгізіңіз"
+                           autocomplete="current-password"
+                           required>
+                </div>
+
+                <button type="submit" class="login-button">
+                    Жүйеге кіру →
+                </button>
+
+                <p id="loginError" role="alert"></p>
+
+            </form>
+
+            <div class="login-footer">
+                Student Management System © 2026
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- 2-БЕТ: НЕГІЗГІ САЙТ -->
+
+    <div id="mainSite">
+
+        <div class="app">
+
+            <aside class="sidebar">
+
+                <div class="logo">
+                    🎓 STUDENT<br>
+                    MANAGEMENT
+                </div>
+
+                <button class="nav-btn active"
+                        onclick="showPage('dashboard', this)">
+                    ▦ Dashboard
+                </button>
+
+                <button class="nav-btn"
+                        onclick="showPage('students', this)">
+                    👨‍🎓 Students
+                </button>
+
+                <button class="nav-btn"
+                        onclick="showPage('add', this)">
+                    ＋ Add Student
+                </button>
+
+                <button class="nav-btn"
+                        onclick="showPage('profile', this)">
+                    👤 Profile
+                </button>
+
+                <button class="nav-btn"
+                        onclick="exportCSV()">
+                    ⇩ CSV жүктеу
+                </button>
+
+                <div class="sidebar-footer">
+                    Student Management System<br>
+                    © 2026
+                </div>
+
+            </aside>
+
+
+            <main class="main">
+
+                <header class="topbar">
+
+                    <h2 id="pageTitle">Dashboard</h2>
+
+                    <div style="display:flex;align-items:center;gap:15px;flex-wrap:wrap">
+
+                        <div class="admin">
+                            ● Admin
+                        </div>
+
+                        <button class="logout-btn" onclick="logout()">
+                            Шығу ↪
+                        </button>
+
+                    </div>
+
+                </header>
+
+
+                <div class="content">
+
+                    <!-- DASHBOARD -->
+
+                    <section id="dashboard" class="page">
+
+                        <div class="welcome">
+                            <h1>Қош келдіңіз! 👋</h1>
+
+                            <p>
+                                Студенттерді басқару жүйесінің басты беті.
+                            </p>
+                        </div>
+
+                        <div class="cards">
+
+                            <div class="card">
+                                <p>Барлық студенттер</p>
+                                <h2 id="totalStudents">0</h2>
+                                <p>Жүйедегі студенттер саны</p>
+                            </div>
+
+                            <div class="card">
+                                <p>Курстар саны</p>
+                                <h2 id="totalCourses">0</h2>
+                                <p>Оқу курстары</p>
+                            </div>
+
+                            <div class="card">
+                                <p>Белсенді студенттер</p>
+                                <h2 id="activeStudents">0</h2>
+                                <p>Белсенді мәртебесі бар</p>
+                            </div>
+
+                            <div class="card">
+                                <p>Топтар саны</p>
+                                <h2 id="totalGroups">0</h2>
+                                <p>Студенттік топтар</p>
+                            </div>
+
+                        </div>
+
+                        <div class="panel">
+
+                            <h3>Соңғы студенттер</h3>
+
+                            <div class="table-wrap">
+
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Аты-жөні</th>
+                                            <th>Курс</th>
+                                            <th>Тобы</th>
+                                            <th>Мәртебесі</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody id="recentStudents"></tbody>
+                                </table>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- STUDENTS -->
+
+                    <section id="students" class="page hidden">
+
+                        <div class="welcome">
+
+                            <h1>Студенттер тізімі</h1>
+
+                            <p>
+                                Студенттер туралы ақпаратты басқару.
+                            </p>
+
+                            <br>
+
+                            <button class="btn btn-primary"
+                                    onclick="showPage('add')">
+                                + Студент қосу
+                            </button>
+
+                        </div>
+
+                        <div class="panel">
+
+                            <input type="text"
+                                   id="searchInput"
+                                   class="search"
+                                   placeholder="Студентті аты, тобы немесе email бойынша іздеу..."
+                                   oninput="renderStudents()">
+
+                            <div class="table-wrap">
+
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Аты-жөні</th>
+                                            <th>Курс</th>
+                                            <th>Тобы</th>
+                                            <th>Email</th>
+                                            <th>Мәртебесі</th>
+                                            <th>Әрекеттер</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody id="studentsTable"></tbody>
+                                </table>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- ADD STUDENT -->
+
+                    <section id="add" class="page hidden">
+
+                        <div class="welcome">
+
+                            <h1 id="formTitle">Жаңа студент қосу</h1>
+
+                            <p>Студенттің ақпаратын толтырыңыз.</p>
+
+                        </div>
+
+                        <div class="panel">
+
+                            <form id="studentForm">
+
+                                <div class="form-grid">
+
+                                    <div class="form-group">
+                                        <label for="studentName">
+                                            Аты-жөні *
+                                        </label>
+
+                                        <input type="text"
+                                               id="studentName"
+                                               placeholder="Madina Baten"
+                                               required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="studentCourse">
+                                            Курс *
+                                        </label>
+
+                                        <select id="studentCourse" required>
+                                            <option value="">Курсты таңдаңыз</option>
+                                            <option value="1">1 курс</option>
+                                            <option value="2">2 курс</option>
+                                            <option value="3">3 курс</option>
+                                            <option value="4">4 курс</option>
+                                            <option value="5">5 курс</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="studentGroup">
+                                            Студенттік тобы
+                                        </label>
+
+                                        <input type="text"
+                                               id="studentGroup"
+                                               placeholder="ММ-23">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="studentEmail">
+                                            Электрондық пошта
+                                        </label>
+
+                                        <input type="email"
+                                               id="studentEmail"
+                                               placeholder="student@example.com">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="studentStatus">
+                                            Мәртебесі
+                                        </label>
+
+                                        <select id="studentStatus">
+                                            <option value="Белсенді">
+                                                Белсенді
+                                            </option>
+
+                                            <option value="Белсенді емес">
+                                                Белсенді емес
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-actions">
+
+                                    <button type="submit"
+                                            class="btn btn-primary"
+                                            id="saveButton">
+                                        Студентті сақтау
+                                    </button>
+
+                                    <button type="button"
+                                            class="btn btn-danger"
+                                            onclick="resetForm()">
+                                        Тазарту
+                                    </button>
+
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </section>
+
+                    <!-- GRADES PAGE -->
+
+                    <section id="grades" class="page hidden">
+
+                        <div class="welcome">
+                            <h1>📊 Студенттердің бағалары</h1>
+                            <p>Студенттердің білім деңгейін 0–100 балл аралығында бағалау.</p>
+                        </div>
+
+                        <div class="panel">
+                            <h3>Баға қою</h3>
+
+                            <form id="gradeForm">
+                                <div class="form-grid">
+
+                                    <div class="form-group">
+                                        <label for="gradeStudent">Студент</label>
+                                        <select id="gradeStudent" required>
+                                            <option value="">Студентті таңдаңыз</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="gradeSubject">Пән атауы</label>
+                                        <input type="text"
+                                               id="gradeSubject"
+                                               placeholder="Мысалы: Математика"
+                                               required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="gradeScore">Баға (0–100)</label>
+                                        <input type="number"
+                                               id="gradeScore"
+                                               min="0"
+                                               max="100"
+                                               placeholder="Мысалы: 85"
+                                               required>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">
+                                        Бағаны сақтау
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="panel">
+                            <h3>Бағалар тізімі</h3>
+
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>№</th>
+                                            <th>Студент</th>
+                                            <th>Пән</th>
+                                            <th>Балл</th>
+                                            <th>Нәтиже</th>
+                                            <th>Әрекет</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody id="gradesTable"></tbody>
+                                </table>
+                            </div>
+
+                            <h3 style="margin-top:25px;">
+                                Орташа балл: <span id="averageGrade">0</span>/100
+                            </h3>
+                        </div>
+
+                    </section>
+                    
+                    <!-- VIDEO LESSONS PAGE -->
+
+                    <section id="videos" class="page hidden">
+
+                        <div class="welcome">
+                            <h1>🎬 Видеосабақтар</h1>
+                            <p>Оқу материалдары мен бейнесабақтарды басқару.</p>
+                        </div>
+
+                        <div class="panel">
+                            <h3>Жаңа видеосабақ қосу</h3>
+
+                            <form id="videoForm">
+                                <div class="form-grid">
+
+                                    <div class="form-group">
+                                        <label for="videoTitle">Сабақ атауы</label>
+                                        <input type="text"
+                                               id="videoTitle"
+                                               placeholder="Мысалы: Python негіздері"
+                                               required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="videoSubject">Пән</label>
+                                        <input type="text"
+                                               id="videoSubject"
+                                               placeholder="Мысалы: Бағдарламалау"
+                                               required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="videoURL">YouTube видео сілтемесі</label>
+                                        <input type="url"
+                                               id="videoURL"
+                                               placeholder="https://www.youtube.com/watch?v=..."
+                                               required>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">
+                                        + Видеосабақ қосу
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="panel">
+                            <h3>Оқу видеолары</h3>
+
+                            <div id="videoList"
+                                 style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;">
+                            </div>
+                        </div>
+
+                    </section>
+                    
+
+
+
+                    <!-- PROFILE -->
+
+                    <section id="profile" class="page hidden">
+
+                        <div class="welcome">
+                            <h1>Мадина профилі</h1>
+                            <p>Пайдаланушы туралы ақпарат.</p>
+                        </div>
+
+                        <div class="panel profile">
+
+                            <h2>👤 Admin</h2>
+
+                            <p>
+                                <strong>Username:</strong> admin
+                            </p>
+
+                            <p>
+                                <strong>Role:</strong> Administrator
+                            </p>
+
+                            <p>
+                                <strong>Status:</strong>
+                                <span class="badge">Active</span>
+                            </p>
+
+                            <p>
+                                <strong>Жүйе:</strong>
+                                Student Management System
+                            </p>
+
+                            <p>
+                                <strong>Студенттер саны:</strong>
+                                <span id="profileStudentCount">0</span>
+                            </p>
+
+                            <br>
+                            <button class="nav-btn" onclick="showPage('grades', this)">
+                                📊 Бағалар
+                            </button>
+
+                            <button class="nav-btn" onclick="showPage('videos', this)">
+                                🎬 Видеосабақтар
+                            </button>
+                            <button class="btn btn-primary"
+                                    onclick="exportCSV()">
+                                Студенттерді CSV файлына сақтау
+                            </button>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+
+    <script>
+    // LOGIN ЖӘНЕ ПАРОЛЬ
+
+const ADMIN_LOGIN = "madina";
+    const ADMIN_PASSWORD = "12345";
+
+    // Логин формасын тексеру
+
+    document.getElementById("loginForm").addEventListener(
+        "submit",
+        function(event) {
+
+            event.preventDefault();
+
+            const username = document.getElementById(
+                "username"
+            ).value.trim();
+
+            const password = document.getElementById(
+                "password"
+            ).value;
+
+            const error = document.getElementById("loginError");
+
+            if (
+                username === ADMIN_LOGIN &&
+                password === ADMIN_PASSWORD
+            ) {
+
+                // Login бетін жабу
+                document.getElementById("loginPage").style.display = "none";
+
+                // Негізгі сайтты ашу
+                document.getElementById("mainSite").style.display = "block";
+
+                // Қате хабарламасын тазалау
+                error.textContent = "";
+
+                // Dashboard көрсету
+                showPage("dashboard");
+
+            } else {
+
+                error.textContent = "Логин немесе пароль қате!";
+
+            }
+        }
+    );
+
+
+    // ЖҮЙЕДЕН ШЫҒУ
+
+    function logout() {
+
+        const confirmed = confirm(
+            "Жүйеден шығуды қалайсыз ба?"
+        );
+
+        if (!confirmed) {
+            return;
+        }
+
+        document.getElementById("mainSite").style.display = "none";
+
+        document.getElementById("loginPage").style.display = "flex";
+
+        document.getElementById("loginForm").reset();
+
+        document.getElementById("loginError").textContent = "";
+
+        resetForm();
+    }
+
+
+    // БАСТАПҚЫ СТУДЕНТТЕР
+
+    const initialStudents = [
+        {
+            id: 1,
+            name: "Madina Baten",
+            course: 3,
+            group: "ММ-23",
+            email: "madina@example.com",
+            status: "Белсенді"
+        },
+        {
+            id: 2,
+            name: "Taskyn Aman",
+            course: 2,
+            group: "ММ-24",
+            email: "taskyn@example.com",
+            status: "Белсенді"
+        },
+        {
+            id: 3,
+            name: "Sabit Sandugash",
+            course: 4,
+            group: "ИТ-22",
+            email: "sabit@example.com",
+            status: "Белсенді"
+        },
+        {
+            id: 4,
+            name: "Tasbolat Nurlykhan",
+            course: 3,
+            group: "ММ-23",
+            email: "nurlykhan@example.com",
+            status: "Белсенді"
+        },
+        {
+            id: 5,
+            name: "Turanov Doszhan",
+            course: 3,
+            group: "ИТ-23",
+            email: "doszhan@example.com",
+            status: "Белсенді"
+        },
+        {
+            id: 6,
+            name: "Muratbek Khamza",
+            course: 3,
+            group: "ММ-23",
+            email: "khamza@example.com",
+            status: "Белсенді"
+        },
+        {
+            id: 7,
+            name: "Aliaskar Abdirakhman",
+            course: 3,
+            group: "ИТ-23",
+            email: "aliaskar@example.com",
+            status: "Белсенді"
+        },
+        {
+            id: 8,
+            name: "Nurgabyl Tilegen",
+            course: 3,
+            group: "ММ-23",
+            email: "tilegen@example.com",
+            status: "Белсенді"
+        }
+    ];
+
+
+    // СТУДЕНТТЕРДІ САҚТАУ
+
+    let students;
+
+    try {
+
+        const savedStudents = localStorage.getItem("sms_students");
+
+        students = savedStudents
+            ? JSON.parse(savedStudents)
+            : initialStudents.map(s => ({ ...s }));
+
+        if (!Array.isArray(students)) {
+            students = initialStudents.map(s => ({ ...s }));
+        }
+
+    } catch (error) {
+
+        students = initialStudents.map(s => ({ ...s }));
+
+    }
+
+
+    let nextId = Math.max(
+        0,
+        ...students.map(s => Number(s.id) || 0)
+    ) + 1;
+
+    let editingId = null;
+
+
+    function saveStudents() {
+
+        localStorage.setItem(
+            "sms_students",
+            JSON.stringify(students)
+        );
+
+    }
+
+
+    // ҚАУІПСІЗ МӘТІН
+
+    function escapeHTML(value) {
+
+        return String(value ?? "").replace(
+            /[&<>"']/g,
+            char => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            })[char]
+        );
+
+    }
+
+
+    // БӨЛІМДЕРДІ АУЫСТЫРУ
+
+    function showPage(page, button) {
+
+        document.querySelectorAll(".page").forEach(section => {
+            section.classList.add("hidden");
+        });
+
+        document.getElementById(page).classList.remove("hidden");
+
+        const titles = {
+            dashboard: "Dashboard",
+            students: "Students",
+            add: editingId === null ? "Add Student" : "Edit Student",
+            profile: "Profile"
+        };
+
+        document.getElementById("pageTitle").textContent = titles[page];
+
+        document.querySelectorAll(".nav-btn").forEach(btn => {
+            btn.classList.remove("active");
+        });
+
+        if (button) {
+
+            button.classList.add("active");
+
+        } else {
+
+            document.querySelectorAll(".nav-btn").forEach(btn => {
+
+                if (
+                    btn.getAttribute("onclick")?.includes(
+                        "'" + page + "'"
+                    )
+                ) {
+                    btn.classList.add("active");
+                }
+
+            });
+
+        }
+
+        if (page === "dashboard" || page === "profile") {
+            updateDashboard();
+        }
+
+        if (page === "students") {
+            renderStudents();
+        }
+
+        if (page === "add") {
+            prepareForm();
+        }
+
+    }
+
+
+    // DASHBOARD СТАТИСТИКАСЫ
+
+    function updateDashboard() {
+
+        document.getElementById("totalStudents").textContent =
+            students.length;
+
+        document.getElementById("totalCourses").textContent =
+            new Set(students.map(s => s.course)).size;
+
+        document.getElementById("activeStudents").textContent =
+            students.filter(s => s.status === "Белсенді").length;
+
+        document.getElementById("totalGroups").textContent =
+            new Set(students.map(s => s.group).filter(Boolean)).size;
+
+        document.getElementById("profileStudentCount").textContent =
+            students.length;
+
+        const recent = document.getElementById("recentStudents");
+
+        recent.innerHTML = students.slice(-5).reverse().map(s => `
+            <tr>
+                <td>${s.id}</td>
+                <td>${escapeHTML(s.name)}</td>
+                <td>${s.course} курс</td>
+                <td>${escapeHTML(s.group || "—")}</td>
+                <td>
+                    <span class="badge">
+                        ${escapeHTML(s.status)}
+                    </span>
+                </td>
+            </tr>
+        `).join("");
+
+    }
+
+
+    // СТУДЕНТТЕР ТІЗІМІ
+
+    function renderStudents() {
+
+        const searchInput = document.getElementById("searchInput");
+
+        const query = searchInput.value.toLowerCase().trim();
+
+        const filtered = students.filter(s => {
+
+            const text = (
+                s.name + " " +
+                s.group + " " +
+                s.email
+            ).toLowerCase();
+
+            return text.includes(query);
+
+        });
+
+        const table = document.getElementById("studentsTable");
+
+        if (filtered.length === 0) {
+
+            table.innerHTML = `
+                <tr>
+                    <td colspan="7" class="empty">
+                        Студент табылмады.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+        table.innerHTML = filtered.map(s => `
+            <tr>
+                <td>${s.id}</td>
+                <td>${escapeHTML(s.name)}</td>
+                <td>${s.course} курс</td>
+                <td>${escapeHTML(s.group || "—")}</td>
+                <td>${escapeHTML(s.email || "—")}</td>
+                <td>
+                    <span class="badge">
+                        ${escapeHTML(s.status)}
+                    </span>
+                </td>
+                <td>
+                    <button class="btn btn-light"
+                            onclick="editStudent(${s.id})">
+                        Өңдеу
+                    </button>
+
+                    <button class="btn btn-danger"
+                            onclick="deleteStudent(${s.id})">
+                        Жою
+                    </button>
+                </td>
+            </tr>
+        `).join("");
+
+    }
+
+
+    // ФОРМАНЫ ДАЙЫНДАУ
+
+    function prepareForm() {
+
+        document.getElementById("studentForm").reset();
+
+        if (editingId === null) {
+
+            document.getElementById("formTitle").textContent =
+                "Жаңа студент қосу";
+
+            document.getElementById("saveButton").textContent =
+                "Студентті сақтау";
+
+            return;
+        }
+
+        const student = students.find(s => s.id === editingId);
+
+        if (!student) {
+            editingId = null;
+            return;
+        }
+
+        document.getElementById("formTitle").textContent =
+            "Студентті өңдеу";
+
+        document.getElementById("saveButton").textContent =
+            "Өзгерістерді сақтау";
+
+        document.getElementById("studentName").value = student.name;
+
+        document.getElementById("studentCourse").value = student.course;
+
+        document.getElementById("studentGroup").value =
+            student.group || "";
+
+        document.getElementById("studentEmail").value =
+            student.email || "";
+
+        document.getElementById("studentStatus").value = student.status;
+
+    }
+
+
+    // СТУДЕНТ ҚОСУ ЖӘНЕ ӨҢДЕУ
+
+    document.getElementById("studentForm").addEventListener(
+        "submit",
+        function(event) {
+
+            event.preventDefault();
+
+            const name = document.getElementById(
+                "studentName"
+            ).value.trim();
+
+            const course = Number(document.getElementById(
+                "studentCourse"
+            ).value);
+
+            const group = document.getElementById(
+                "studentGroup"
+            ).value.trim();
+
+            const email = document.getElementById(
+                "studentEmail"
+            ).value.trim();
+
+            const status = document.getElementById(
+                "studentStatus"
+            ).value;
+
+            if (name === "" || !course) {
+
+                alert("Міндетті өрістерді толтырыңыз!");
+
+                return;
+            }
+
+            const studentData = {
+                name,
+                course,
+                group,
+                email,
+                status
+            };
+
+            if (editingId === null) {
+
+                students.push({
+                    id: nextId++,
+                    ...studentData
+                });
+
+                alert("Студент сәтті қосылды!");
+
+            } else {
+
+                students = students.map(s => {
+
+                    if (s.id === editingId) {
+                        return {
+                            ...s,
+                            ...studentData
+                        };
+                    }
+
+                    return s;
+
+                });
+
+                editingId = null;
+
+                alert("Студент мәліметтері жаңартылды!");
+
+            }
+
+            saveStudents();
+
+            this.reset();
+
+            showPage("students");
+
+        }
+    );
+
+
+    // СТУДЕНТТІ ӨҢДЕУ
+
+    function editStudent(id) {
+
+        editingId = id;
+
+        showPage("add");
+
+    }
+
+
+    // СТУДЕНТТІ ЖОЮ
+
+    function deleteStudent(id) {
+
+        const student = students.find(s => s.id === id);
+
+        if (!student) {
+            return;
+        }
+
+        const confirmed = confirm(
+            student.name + " студентін жойғыңыз келе ме?"
+        );
+
+        if (!confirmed) {
+            return;
+        }
+
+        students = students.filter(s => s.id !== id);
+
+        saveStudents();
+
+        renderStudents();
+
+        updateDashboard();
+
+        alert("Студент жойылды!");
+
+    }
+
+
+    // ФОРМАНЫ ТАЗАРТУ
+
+    function resetForm() {
+
+        document.getElementById("studentForm").reset();
+
+        editingId = null;
+
+        document.getElementById("formTitle").textContent =
+            "Жаңа студент қосу";
+
+        document.getElementById("saveButton").textContent =
+            "Студентті сақтау";
+
+    }
+
+
+    // CSV ФАЙЛЫН ЖҮКТЕУ
+
+    function exportCSV() {
+
+        const rows = [
+            [
+                "ID",
+                "Аты-жөні",
+                "Курс",
+                "Тобы",
+                "Email",
+                "Мәртебесі"
+            ],
+
+            ...students.map(s => [
+                s.id,
+                s.name,
+                s.course,
+                s.group,
+                s.email,
+                s.status
+            ])
+        ];
+
+        const csv = "\uFEFF" + rows.map(row =>
+            row.map(value =>
+                '"' + String(value ?? "").replace(/"/g, '""') + '"'
+            ).join(";")
+        ).join("\r\n");
+
+        const blob = new Blob(
+            [csv],
+            { type: "text/csv;charset=utf-8;" }
+        );
+
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement("a");
+
+        link.href = url;
+        link.download = "students.csv";
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        link.remove();
+
+        URL.revokeObjectURL(url);
+
+    }
+
+
+    // БАСТАПҚЫ МӘЛІМЕТТЕРДІ КӨРСЕТУ
+
+    updateDashboard();
+
+    renderStudents();
+
+// ==================================
+// БАҒАЛАР ЖҮЙЕСІ
+// ==================================
+
+let grades = [];
+
+try {
+    const savedGrades = localStorage.getItem("sms_grades");
+    grades = savedGrades ? JSON.parse(savedGrades) : [];
+
+    if (!Array.isArray(grades)) {
+        grades = [];
+    }
+} catch (error) {
+    grades = [];
+}
+
+function saveGrades() {
+    localStorage.setItem("sms_grades", JSON.stringify(grades));
+}
+
+// Студенттерді таңдау тізіміне шығару
+function updateGradeStudents() {
+    const select = document.getElementById("gradeStudent");
+    const previousValue = select.value;
+
+    select.innerHTML =
+        '<option value="">Студентті таңдаңыз</option>';
+
+    students.forEach(function(student) {
+        const option = document.createElement("option");
+        option.value = student.id;
+        option.textContent = student.name;
+        select.appendChild(option);
+    });
+
+    if (students.some(function(student) {
+        return String(student.id) === previousValue;
+    })) {
+        select.value = previousValue;
+    }
+}
+
+// Баға қою
+document.getElementById("gradeForm").addEventListener(
+    "submit",
+    function(event) {
+        event.preventDefault();
+
+        const studentId = Number(
+            document.getElementById("gradeStudent").value
+        );
+
+        const subject = document.getElementById("gradeSubject")
+            .value.trim();
+
+        const score = Number(
+            document.getElementById("gradeScore").value
+        );
+
+        if (
+            !students.some(function(student) {
+                return student.id === studentId;
+            }) ||
+            subject === "" ||
+            !Number.isFinite(score) ||
+            score < 0 ||
+            score > 100
+        ) {
+            alert("Студентті таңдап, пәнді және 0–100 аралығындағы бағаны енгізіңіз!");
+            return;
+        }
+
+        grades.push({
+            id: Date.now(),
+            studentId: studentId,
+            subject: subject,
+            score: score
+        });
+
+        saveGrades();
+        renderGrades();
+
+        this.reset();
+
+        alert("Баға сәтті сақталды!");
+    }
+);
+
+// Бағалар кестесін көрсету
+function renderGrades() {
+    const table = document.getElementById("gradesTable");
+
+    table.innerHTML = "";
+
+    if (grades.length === 0) {
+        table.innerHTML = `
+    < tr >
+    <td colspan="6" class="empty" >
+        Әзірге бағалар енгізілмеген.
+                </td>
+            </tr>
+                `;
+    } else {
+        grades.forEach(function(grade, index) {
+            const student = students.find(function(item) {
+                return item.id === grade.studentId;
+            });
+
+            const row = document.createElement("tr");
+
+            const nameCell = document.createElement("td");
+            nameCell.textContent = index + 1;
+
+            const studentCell = document.createElement("td");
+            studentCell.textContent = student
+                ? student.name
+                : "Студент табылмады";
+
+            const subjectCell = document.createElement("td");
+            subjectCell.textContent = grade.subject;
+
+            const scoreCell = document.createElement("td");
+            scoreCell.textContent = grade.score + "/100";
+
+            const resultCell = document.createElement("td");
+            resultCell.textContent =
+                grade.score >= 50 ? "Өтті" : "Қайта оқу";
+
+            const actionCell = document.createElement("td");
+            const editButton = document.createElement("button");
+
+            editButton.className = "btn btn-light";
+            editButton.textContent = "Өңдеу";
+
+            editButton.addEventListener("click", function() {
+                const newScore = prompt(
+                    "Жаңа бағаны енгізіңіз (0–100):",
+                    grade.score
+                );
+
+                if (newScore === null || newScore.trim() === "") {
+                    return;
+                }
+
+                const score = Number(newScore);
+
+                if (
+                    !Number.isFinite(score) ||
+                    score < 0 ||
+                    score > 100
+                ) {
+                    alert("Баға 0 мен 100 аралығында болуы керек!");
+                    return;
+                }
+
+                grade.score = score;
+
+                saveGrades();
+                renderGrades();
+            });
+
+            const deleteButton = document.createElement("button");
+            deleteButton.className = "btn btn-danger";
+            deleteButton.textContent = "Жою";
+
+            deleteButton.addEventListener("click", function() {
+                if (confirm("Бұл бағаны жоясыз ба?")) {
+                    grades = grades.filter(function(item) {
+                        return item.id !== grade.id;
+                    });
+
+                    saveGrades();
+                    renderGrades();
+                }
+            });
+
+            actionCell.appendChild(editButton);
+            actionCell.appendChild(deleteButton);
+
+            row.appendChild(nameCell);
+            row.appendChild(studentCell);
+            row.appendChild(subjectCell);
+            row.appendChild(scoreCell);
+            row.appendChild(resultCell);
+            row.appendChild(actionCell);
+
+            table.appendChild(row);
+        });
+    }
+
+    const average = grades.length
+        ? grades.reduce(function(sum, grade) {
+            return sum + grade.score;
+        }, 0) / grades.length
+        : 0;
+
+    document.getElementById("averageGrade").textContent =
+        average.toFixed(1);
+}
+
+
+// ==================================
+// ВИДЕОСАБАҚТАР
+// ==================================
+
+let videos = [];
+
+try {
+    const savedVideos = localStorage.getItem("sms_videos");
+    videos = savedVideos ? JSON.parse(savedVideos) : [];
+
+    if (!Array.isArray(videos)) {
+        videos = [];
+    }
+} catch (error) {
+    videos = [];
+}
+
+function saveVideos() {
+    localStorage.setItem("sms_videos", JSON.stringify(videos));
+}
+
+// YouTube сілтемесінен видео ID алу
+function getYouTubeId(url) {
+    try {
+        const parsed = new URL(url);
+
+        if (
+            parsed.hostname !== "youtube.com" &&
+            parsed.hostname !== "www.youtube.com" &&
+            parsed.hostname !== "m.youtube.com" &&
+            parsed.hostname !== "youtu.be" &&
+            parsed.hostname !== "www.youtube-nocookie.com"
+        ) {
+            return null;
+        }
+
+        let videoId = "";
+
+        if (
+            parsed.hostname === "youtu.be"
+        ) {
+            videoId = parsed.pathname.split("/")[1] || "";
+        } else if (
+            parsed.pathname === "/watch"
+        ) {
+            videoId = parsed.searchParams.get("v") || "";
+        } else if (
+            parsed.pathname.startsWith("/embed/") ||
+            parsed.pathname.startsWith("/shorts/")
+        ) {
+            videoId = parsed.pathname.split("/")[2] || "";
+        }
+
+        return /^[a-zA-Z0-9_-]{11}$/.test(videoId)
+            ? videoId
+            : null;
+
+    } catch (error) {
+        return null;
+    }
+}
+
+// Видеосабақ қосу
+document.getElementById("videoForm").addEventListener(
+    "submit",
+    function(event) {
+        event.preventDefault();
+
+        const title = document.getElementById("videoTitle")
+            .value.trim();
+
+        const subject = document.getElementById("videoSubject")
+            .value.trim();
+
+        const url = document.getElementById("videoURL")
+            .value.trim();
+
+        const videoId = getYouTubeId(url);
+
+        if (!videoId) {
+            alert("YouTube видеосының дұрыс сілтемесін енгізіңіз!");
+            return;
+        }
+
+        videos.push({
+            id: Date.now(),
+            title: title,
+            subject: subject,
+            url: url,
+            videoId: videoId
+        });
+
+        saveVideos();
+        renderVideos();
+
+        this.reset();
+
+        alert("Видеосабақ қосылды!");
+    }
+);
+
+// Видеосабақтарды көрсету
+function renderVideos() {
+    const container = document.getElementById("videoList");
+
+    container.innerHTML = "";
+
+    if (videos.length === 0) {
+        container.innerHTML =
+            '<p class="empty">Әзірге видеосабақтар қосылмаған.</p>';
+        return;
+    }
+
+    videos.forEach(function(video) {
+        const card = document.createElement("div");
+
+        card.className = "card";
+
+        const title = document.createElement("h3");
+        title.textContent = video.title;
+        title.style.marginBottom = "10px";
+
+        const subject = document.createElement("p");
+        subject.textContent = "Пән: " + video.subject;
+        subject.style.marginBottom = "15px";
+
+        const frame = document.createElement("iframe");
+        frame.src =
+            "https://www.youtube-nocookie.com/embed/" + video.videoId;
+
+        frame.title = video.title;
+        frame.style.width = "100%";
+        frame.style.aspectRatio = "16 / 9";
+        frame.style.border = "0";
+        frame.allow =
+            "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+        frame.allowFullscreen = true;
+        frame.loading = "lazy";
+
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "btn btn-danger";
+        deleteButton.textContent = "Видеоны жою";
+        deleteButton.style.marginTop = "15px";
+
+        deleteButton.addEventListener("click", function() {
+            if (confirm("Видеосабақты жоясыз ба?")) {
+                videos = videos.filter(function(item) {
+                    return item.id !== video.id;
+                });
+
+                saveVideos();
+                renderVideos();
+            }
+        });
+
+        card.appendChild(title);
+        card.appendChild(subject);
+        card.appendChild(frame);
+        card.appendChild(deleteButton);
+
+        container.appendChild(card);
+    });
+}
+
+
+// ==================================
+// ЖАҢА БЕТТЕРДІ АШУ
+// ==================================
+
+const originalShowPage = showPage;
+
+showPage = function(page, button) {
+    originalShowPage(page, button);
+
+    if (page === "grades") {
+        updateGradeStudents();
+        renderGrades();
+    }
+
+    if (page === "videos") {
+        renderVideos();
+    }
+};
+
+
+// Бастапқы мәліметтерді көрсету
+updateDashboard();
+renderStudents();
+updateGradeStudents();
+renderGrades();
+renderVideos();
+
+
+    </script>
+
+</body>
+</html>
+
